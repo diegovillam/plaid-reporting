@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Plaid Connect</title>
+        <link rel="stylesheet" href="/css/index.css" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="wrapper">
+           <h1>Hello</h1>
+           <h2>To get started, please provide some basic information about yourself</h2>
+           <form class="form" name="form" id="form">
+               <div class="input-group">
+                   <label>Your Full Name</label>
+                   <input name="fullName" placeholder="John Doe"/>
+               </div>
+               <div class="input-group">
+                   <label>Your Email Address</label>
+                   <input name="email" placeholder="johndoe@mail.com" />
+               </div>
+               <div class="input-group">
+                   <button type="submit">Submit</button>
+               </div>
+           </form>
+        </div>
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+    <script type="text/javascript">
+    (function($) {
+        const trigger = (fullName, email) => {
+            const handler = Plaid.create({
+                clientName: 'Plaid Quickstart',
+                countryCodes: ['US'],
+                env: '<%= plaidEnv %>',
+                key: '<%= plaidKey %>',
+                product: ['transactions'],
+                language: 'en',
+                userLegalName: fullName,
+                userEmailAddress: email,
+                onLoad: function() {
+                    console.log('Loaded');
+                },
+                onSuccess: function(public_token, metadata) {
+                    $.post('/plaid-token', {
+                        public_token: public_token,
+                    });
+                },
+                onExit: function(err, metadata) {
+                    // The user exited the Link flow.
+                    if (err != null) {
+                        // The user encountered a Plaid API error prior to exiting.
+                    }
+                    // metadata contains information about the institution
+                    // that the user selected and the most recent API request IDs.
+                    // Storing this information can be helpful for support.
+                },
+            });
+            handler.open();
+        };
+
+        $('#form').on('submit', function (e) {
+            e.preventDefault();
+            const fullName = $('input[name="fullName"]').val();
+            const email = $('input[name="email"]').val();
+            if (fullName.length === 0 || email.length === 0) {
+                return alert('Please enter your full name and email address.');
+            }
+            trigger(fullName, email);
+        });
+    })(jQuery);
+    </script>
+</html>

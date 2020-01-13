@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "diego",
+    "password": null,
+    "database": "sorty-plaid",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "diego",
+    "password": null,
+    "database": "sorty-plaid",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "diego",
+    "password": null,
+    "database": "sorty-plaid",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}

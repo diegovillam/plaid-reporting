@@ -1,0 +1,52 @@
+html, body {
+  margin: 0;
+  font-size: 16px;
+  font-family: 'Nunito', sans-serif; }
+
+body {
+  color: #262626;
+  background: radial-gradient(#bbe1fa, #3282b8);
+  color: #0f4c75; }
+  body button, body label, body input {
+    font-size: 1rem; }
+
+.wrapper {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  width: 350px;
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column; }
+  .wrapper h1, .wrapper h2, .wrapper p, .wrapper label {
+    opacity: 0.75; }
+  .wrapper form {
+    width: 100%; }
+    .wrapper form .input-group {
+      display: block;
+      padding: 20px 0;
+      text-align: left;
+      width: 100%; }
+      .wrapper form .input-group label {
+        display: block;
+        margin-bottom: 4px; }
+      .wrapper form .input-group input {
+        border-radius: 4px;
+        border: unset;
+        padding: 12px;
+        width: 100%;
+        box-sizing: border-box;
+        color: #0f4c75; }
+        .wrapper form .input-group input:focus, .wrapper form .input-group input:active {
+          outline: none; }
+        .wrapper form .input-group input::placeholder {
+          opacity: 0.5; }
+      .wrapper form .input-group button {
+        border: unset;
+        width: 100%;
+        border-radius: 4px;
+        padding: 16px 12px;
+        background: #0f4c75;
+        color: #bbe1fa; }
