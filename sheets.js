@@ -17,6 +17,7 @@ const models = require('./models');
                     month: now.getMonth(),
                     sheetId: sheet.spreadsheetId,
                     sheetUrl: sheet.spreadsheetUrl,
+                    sheets: '',
                 });
                 await putDataOnSheet(document, sheet.spreadsheetId);
             } else {
