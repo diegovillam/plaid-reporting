@@ -24,6 +24,10 @@ const plaidClient = new plaid.Client(
                     count: 10,
                 },
                 async(err, result) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
                     result.transactions.forEach(async (transaction) => {
                         const stored = await models.Transaction.findOne({ where: { transactionId: transaction.transaction_id } });
                         if (!stored) {
