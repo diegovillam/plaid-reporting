@@ -1,6 +1,6 @@
 require('dotenv').config();
 const plaid = require('plaid');
-const models = require('./models');
+const models = require('../models');
 const moment = require('moment');
 
 const plaidClient = new plaid.Client(
@@ -10,7 +10,7 @@ const plaidClient = new plaid.Client(
     process.env.PLAID_ENVIRONMENT === 'development' ? plaid.environments.development :  (process.env.PLAID_ENVIRONMENT === 'production' ? plaid.environments.production : plaid.environments.sandbox)
 );
 
-(function() {
+module.exports = function() {
     const today = moment().format('YYYY-MM-DD');
     const yesterday = moment().subtract(7, 'days').format('YYYY-MM-DD');
     models.Item.findAll({}).then(items => {
@@ -64,4 +64,4 @@ const plaidClient = new plaid.Client(
             )
         });
     });
-}());
+};

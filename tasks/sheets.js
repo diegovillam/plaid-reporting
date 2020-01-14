@@ -1,8 +1,8 @@
 require('dotenv').config();
-const handler = require('./sheets-handler');
-const models = require('./models');
+const handler = require('../sheets-handler');
+const models = require('../models');
 
-(function() {
+module.exports = function() {
     const now = new Date();
     models.Item.findAll({}).then(items => {
         // Each item must have a spreadsheet
@@ -25,7 +25,7 @@ const models = require('./models');
             }
         });
     });
-})();
+};
 
 const putDataOnSheet = (document, id) => new Promise(async (resolve, reject) => {
     try {
