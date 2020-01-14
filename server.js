@@ -11,7 +11,7 @@ const plaidClient = new plaid.Client(
     process.env.PLAID_CLIENT_ID,
     process.env.PLAID_SECRET,
     process.env.PLAID_KEY,
-    process.env.NODE_ENV === 'production' ? plaid.environments.production : plaid.environments.sandbox
+    process.env.PLAID_ENVIRONMENT === 'development' ? plaid.environments.development :  (process.env.PLAID_ENVIRONMENT === 'production' ? plaid.environments.production : plaid.environments.sandbox)
 );
 
 app.set('view engine', 'ejs');
