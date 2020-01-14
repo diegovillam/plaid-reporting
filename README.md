@@ -4,7 +4,9 @@
 
 2. Run your migrations `npx sequelize-cli db:migrate` after configuring DB on environment file
 
-3. Set a CRON job to run `node plaid` every 60 minutes, and `node sheets` every 65 minutes.
+3. Run `node google-auth` once to set up your Google account access token. This is done only once to authorize your account to create new spreadsheets.
+
+4. Set a CRON job to run `node plaid` every 60 minutes, and `node sheets` every 65 minutes.
 
 ## Please remember:
 
