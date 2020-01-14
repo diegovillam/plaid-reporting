@@ -11,7 +11,7 @@ const models = require('./models');
             let document = await models.Document.findOne({ where: { itemId: item.id }, raw: true });
             if (!document) {
                 const sheet = await handler.create('Sheet ' + item.id);
-                await models.Document.create({
+                document = await models.Document.create({
                     name: 'Sheet ' + item.id,
                     itemId: item.id,
                     month: now.getMonth(),
