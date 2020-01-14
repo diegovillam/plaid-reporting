@@ -46,4 +46,4 @@ app.post('/plaid-token', (req, res) => {
     );
 });
 
-const server = app.listen(3001, () => console.log('App listening to HTTP requests.'));
+const server = app.listen(process.env.PORT, () => console.log('App listening to HTTP requests at port ' + process.env.PORT));
