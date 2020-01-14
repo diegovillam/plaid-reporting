@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     unofficialCurrencyCode: DataTypes.STRING
   }, {});
   Transaction.associate = function(models) {
-    Transaction.belongsTo(models.Item);
+    Transaction.belongsTo(models.Item, { foreignKey: 'itemId' });
   };
   return Transaction;
 };

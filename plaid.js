@@ -63,5 +63,5 @@ const plaidClient = new plaid.Client(
                 }
             )
         });
-    })
+    });
 }());
