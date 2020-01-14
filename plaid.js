@@ -12,7 +12,7 @@ const plaidClient = new plaid.Client(
 
 (function() {
     const today = moment().format('YYYY-MM-DD');
-    const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    const yesterday = moment().subtract(7, 'days').format('YYYY-MM-DD');
     models.Item.findAll({}).then(items => {
         items.forEach(item => {
             item = item.dataValues;
@@ -20,18 +20,15 @@ const plaidClient = new plaid.Client(
                 item.accessToken,
                 yesterday,
                 today,
-                {
-                    count: 10,
-                },
+                { count: 500 },
                 async(err, result) => {
                     if (err) {
                         console.error(err);
                         return;
                     }
                     result.transactions.forEach(async (transaction) => {
-                        const stored = await models.Transaction.findOne({ where: { transactionId: transaction.transaction_id } });
+                        const stored = await models.Transaction.findOne({ where: { transactionId: transaction.transaction_id }, raw: true });
                         if (!stored) {
-                            // item = await models.Item.findOne({ where: { itemId: item.item_id } });
                             models.Transaction.create({
                                 itemId: item.id,
                                 accountId: transaction.account_id,
@@ -51,11 +48,20 @@ const plaidClient = new plaid.Client(
                                 transactionType: transaction.transaction_type,
                                 unofficialCurrencyCode: transaction.unofficial_currency_code,
                             });
+                            console.log('Added transaction ', transaction.transaction_id);
+                            if (transaction.pending_transaction_id) {
+                                models.Transaction.destroy({
+                                    where: {
+                                        transactionId: transaction.pending_transaction_id,
+                                    }
+                                }).then(affectedRows => {
+                                    console.log('Deleted ', affectedRows, ' removed transactions.');
+                                });
+                            }
                         }
                     });
                 }
             )
-        
-        })
+        });
     })
 }());
