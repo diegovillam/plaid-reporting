@@ -11,15 +11,18 @@ const plaidClient = new plaid.Client(
 );
 
 module.exports = function() {
-    const today = moment().format('YYYY-MM-DD');
-    const yesterday = moment().subtract(7, 'days').format('YYYY-MM-DD');
+    const date = new Date();
+    //Generate date range from first day of this month to the first day of the next month
+    const [year, month, day] = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}`.split('-');
+    const now = `${year}-${(('0' + (Number(month))).slice(-2))}-${('0' + (Number(day))).slice(-2)}`;
+    const then = `${Number(month) === 12 ? (Number(year) + 1) : year}-${Number(month) === 12 ? '01' : ('0' + (Number(month) + 1)).slice(-2)}-${('0' + (Number(day))).slice(-2)}`;
     models.Item.findAll({}).then(items => {
         items.forEach(item => {
             item = item.dataValues;
             plaidClient.getTransactions(
                 item.accessToken,
-                yesterday,
-                today,
+                now,
+                then,
                 { count: 500 },
                 async(err, result) => {
                     if (err) {
