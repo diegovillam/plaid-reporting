@@ -72,7 +72,9 @@ const truncateSheet = (id, sheet) => new Promise(async (resolve, reject) => {
     const sheets = google.sheets({ version: 'v4', auth });
     const request = {
         spreadsheetId: id,
-        range: !!sheet? [`${sheet}!A1:Z10000`] : ['A1:Z10000'],
+        // F is the column for `Category` in this app
+        // TODO: Get rid of this magic number? make it somewhat configurable.
+        range: !!sheet? [`${sheet}!A1:F10000`] : ['A1:F10000'],
     };
     sheets.spreadsheets.values.clear(request, (err, response) => {
         if (err) {
