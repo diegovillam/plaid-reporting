@@ -45,7 +45,7 @@ const putDataOnSheet = (document, id) => new Promise(async (resolve, reject) => 
         transactions.forEach((transaction, i) => {
             values.push(
                 [
-                    ((transaction.length - 1) - i) + 1,
+                    ((transactions.length - 1) - i) + 1,
                     moment(transaction.date).format('MM/DD/YYYY'),
                     transaction.amount,
                     transaction.name,
