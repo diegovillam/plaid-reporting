@@ -1,9 +1,8 @@
 require('dotenv').config();
-const moment = require('moment');
-const handler = require('../sheets-handler');
-const models = require('../models');
+const handler = require('./sheets-handler');
+const models = require('./models');
 
-module.exports = function() {
+(function() {
     const now = new Date();
     models.Item.findAll({}).then(items => {
         // Each item must have a spreadsheet
@@ -26,7 +25,7 @@ module.exports = function() {
             }
         });
     });
-};
+})();
 
 const putDataOnSheet = (document, id) => new Promise(async (resolve, reject) => {
     try {
@@ -41,22 +40,13 @@ const putDataOnSheet = (document, id) => new Promise(async (resolve, reject) => 
         }
         const transactions = await getSheetData(id);
         await handler.truncate(id, sheetName);
-        let values = [];
-        transactions.forEach((transaction, i) => {
+        const values = [];
+        values.push(['#', 'Date', 'Amount', 'Name', 'Category', 'Note', 'Frequency']);
+        transactions.forEach(transaction => {
             values.push(
-                [
-                    i + 1,
-                    moment(transaction.date).format('MM/DD/YYYY'),
-                    transaction.amount,
-                    transaction.name,
-                    JSON.parse(transaction.category)[0],
-                    //'',
-                    //'',
-                ],
+                [transaction.id, transaction.date, transaction.amount, transaction.name, JSON.parse(transaction.category)[0], '', ''],
             );
         });
-        values = values.reverse();
-        values.unshift(['#', 'Date', 'Amount', 'Name', 'Category', 'Note', 'Frequency']);
         const result = await handler.write(id, values, sheetName);
         return resolve(result);
     } catch (e) {

@@ -53,7 +53,7 @@ const writeSheet = (id, values, sheet) => new Promise(async (resolve, reject) =>
         spreadsheetId: id,
         range: !!sheet ? `${sheet}!B2:B9` : 'B2:B9',
         valueInputOption: 'USER_ENTERED',
-        insertDataOption: 'INSERT_ROWS',
+        insertDataOption: 'OVERWRITE',
         resource: {
             values: values,
         },
