@@ -40,13 +40,22 @@ const putDataOnSheet = (document, id) => new Promise(async (resolve, reject) => 
         }
         const transactions = await getSheetData(id);
         await handler.truncate(id, sheetName);
-        const values = [];
+        let values = [];
         values.push(['#', 'Date', 'Amount', 'Name', 'Category', 'Note', 'Frequency']);
-        transactions.forEach(transaction => {
+        transactions.forEach((transaction, i) => {
             values.push(
-                [transaction.id, transaction.date, transaction.amount, transaction.name, JSON.parse(transaction.category)[0], '', ''],
+                [
+                    i,
+                    moment(transaction.date.split('T')[0], 'YYYY-MM-DD').format('MM/DD/YYYY'),
+                    transaction.amount,
+                    transaction.name,
+                    JSON.parse(transaction.category)[0],
+                    //'',
+                    //'',
+                ],
             );
         });
+        values = values.reverse();
         const result = await handler.write(id, values, sheetName);
         return resolve(result);
     } catch (e) {
