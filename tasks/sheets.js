@@ -47,7 +47,7 @@ const putDataOnSheet = (document, id) => new Promise(async (resolve, reject) => 
             values.push(
                 [
                     i,
-                    moment(transaction.date.split('T')[0], 'YYYY-MM-DD').format('MM/DD/YYYY'),
+                    moment(transaction.date).format('MM/DD/YYYY'),
                     transaction.amount,
                     transaction.name,
                     JSON.parse(transaction.category)[0],
