@@ -42,7 +42,6 @@ const putDataOnSheet = (document, id) => new Promise(async (resolve, reject) => 
         const transactions = await getSheetData(id);
         await handler.truncate(id, sheetName);
         let values = [];
-        values.push(['#', 'Date', 'Amount', 'Name', 'Category', 'Note', 'Frequency']);
         transactions.forEach((transaction, i) => {
             values.push(
                 [
@@ -57,6 +56,7 @@ const putDataOnSheet = (document, id) => new Promise(async (resolve, reject) => 
             );
         });
         values = values.reverse();
+        values.unshift(['#', 'Date', 'Amount', 'Name', 'Category', 'Note', 'Frequency']);
         const result = await handler.write(id, values, sheetName);
         return resolve(result);
     } catch (e) {
