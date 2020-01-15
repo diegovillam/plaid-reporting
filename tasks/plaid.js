@@ -13,9 +13,9 @@ const plaidClient = new plaid.Client(
 module.exports = function() {
     const date = new Date();
     //Generate date range from first day of this month to the first day of the next month
-    const [year, month] = `${date.getFullYear()}-${date.getMonth() + 1}`;
-    const now = `${year}-${(('0' + (Number(month))).slice(-2))}-01`;
-    const then = `${Number(month) === 12 ? (Number(year) + 1) : year}-${Number(month) === 12 ? '01' : ('0' + (Number(month) + 1)).slice(-2)}-01`;
+    const [year, month] = `${date.getFullYear()}-${date.getMonth() + 1}`.split('-');
+    const now = `${year}-${(('0' + (Number(month) + 1)).slice(-2))}-01`;
+    const then = `${Number(month) === 12 ? (Number(year) + 1) : year}-${Number(month) === 12 ? '01' : ('0' + (Number(month) + 2)).slice(-2)}-01`;
     models.Item.findAll({}).then(items => {
         items.forEach(item => {
             item = item.dataValues;
