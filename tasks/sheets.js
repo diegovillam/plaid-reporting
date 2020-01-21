@@ -81,7 +81,20 @@ const getSheetData = id => new Promise(async (resolve, reject) => {
             }
         ],
     }).then(document => {
-        const transactions = document.toJSON().Item.Transactions;
+        const transactions = document.toJSON().Item.Transactions.filter(t => isTransactionValid(t));
         return resolve(transactions);
     });
 });
+
+const isTransactionValid = transaction => {
+    try {
+        // payments made to CC company
+        if (transaction.name.toLowerCase().includes('payment received')) {
+            return false;
+        }
+    } catch (e) {
+        return true;
+    }
+    return true;
+    
+};
