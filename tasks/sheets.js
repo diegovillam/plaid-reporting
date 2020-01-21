@@ -81,7 +81,9 @@ const getSheetData = id => new Promise(async (resolve, reject) => {
             }
         ],
     }).then(document => {
-        const transactions = document.toJSON().Item.Transactions.filter(t => isTransactionValid(t));
+        const transactions = document.toJSON().Item.Transactions.filter(t => isTransactionValid(t)).sort((a, b) => {
+		return  moment(b.date).unix() - moment(a.date).unix();
+	});
         return resolve(transactions);
     });
 });
