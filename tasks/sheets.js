@@ -89,7 +89,7 @@ const getSheetData = id => new Promise(async (resolve, reject) => {
 const isTransactionValid = transaction => {
     try {
         // payments made to CC company
-        if (transaction.name.toLowerCase().includes('payment received') || transaction.name.toLowerCase().includes(' thank you!')) {
+        if (transaction.name.toLowerCase().includes('payment received') || transaction.name.toLowerCase().includes(' thank you')) {
             return false;
         }
     } catch (e) {
