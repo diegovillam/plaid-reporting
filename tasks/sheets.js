@@ -31,7 +31,7 @@ module.exports = function() {
 const putDataOnSheet = (document, id) => new Promise(async (resolve, reject) => {
     try {
         const currentSheets = document.sheets.split(',');
-        const sheetName = new Date().toLocaleString('default', { month: 'long' });
+        const sheetName = `${new Date().toLocaleString('default', { month: 'long' })} ${new Date().getFullYear()}`;
         if (!currentSheets.includes(sheetName)) {
             await handler.addSheet(id, sheetName);
             await models.Document.update(
@@ -89,7 +89,7 @@ const getSheetData = id => new Promise(async (resolve, reject) => {
 const isTransactionValid = transaction => {
     try {
         // payments made to CC company
-        if (transaction.name.toLowerCase().includes('payment received')) {
+        if (transaction.name.toLowerCase().includes('payment received') || transaction.name.toLowerCase().includes(' thank you!')) {
             return false;
         }
     } catch (e) {
