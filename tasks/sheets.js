@@ -81,7 +81,7 @@ const getSheetData = id => new Promise(async (resolve, reject) => {
             }
         ],
     }).then(document => {
-        const transactions = document.toJSON().Item.Transactions.filter(t => isTransactionValid(t));
+        const transactions = document.toJSON().Item.Transactions.filter(t => isTransactionValid(t)).filter(t => isFromThisMonth(t));
         return resolve(transactions);
     });
 });
@@ -95,6 +95,19 @@ const isTransactionValid = transaction => {
     } catch (e) {
         return true;
     }
-    return true;
-    
+    return true;    
 };
+
+const isFromThisMonth = transaction => {
+    try {
+        const thisMonth = new Date().getMonth();
+        const thatDate = moment(transaction.date);
+        const thatMonth = thatDate.month();
+        return thisMonth === thatMonth;
+    } catch (e) {
+        console.log('Err ', e)
+        return false;
+    }
+    return false;
+};
+
