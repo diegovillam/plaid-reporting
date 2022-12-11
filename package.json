@@ -14,7 +14,7 @@
     "cron": "^1.7.2",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "google-spreadsheet": "^2.0.8",
     "googleapis": "^46.0.0",
     "moment": "^2.24.0",
